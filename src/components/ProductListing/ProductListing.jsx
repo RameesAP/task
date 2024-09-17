@@ -18,59 +18,7 @@ import { GET_PRODUCTS } from "@/graphql/queries";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-// async function fetchProducts() {
-//   const response = await fetch("/api/graphql", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       query: GET_PRODUCTS,
-//       variables: {
-//         categoryUid: "Mw==",
-//         pageSize: 12,
-//         currentPage: 1,
-//       },
-//     }),
-//   });
-
-//   if (!response.ok) {
-//     throw new Error("Network response was not ok");
-//   }
-
-//   const data = await response.json();
-//   return data.data.products.items;
-// }
-
 export default function ProductListing() {
-  // { products }
-  // const [products, setProducts] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
-
-  // useEffect(() => {
-  //   const getProducts = async () => {
-  //     try {
-  //       const productData = await fetchProducts();
-  //       setProducts(productData);
-  //     } catch (err) {
-  //       console.error("Error fetching products:", err); // Log the error for more details
-  //       setError(err.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   getProducts();
-  // }, []);
-
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>Error: {error}</div>;
-
-  // console.log("dataaaaProducts  ===", products);
-  // console.log("dataaaaProductsname  ===",products[0]?.name);
-  // console.log("dataaaaProductsid  ===",products[0]?.id);
-
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -100,7 +48,7 @@ export default function ProductListing() {
         const data = await response.json();
         setProducts(data.data.products.items);
       } catch (err) {
-        console.error("Error fetching products:", err); // Log the error for more details
+        console.error("Error fetching products:", err);
         setError(err.message);
       } finally {
         setLoading(false);

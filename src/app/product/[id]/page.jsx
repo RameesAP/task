@@ -1,11 +1,8 @@
-// "use client";
-
 import { Button } from "@/components/ui/button";
 import { useSingleProduct } from "@/hooks/queryHooks";
 
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-// import React, { useEffect, useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { MdBalance, MdFavorite } from "react-icons/md";
 import { GraphQLClient } from "graphql-request";
@@ -13,25 +10,8 @@ import { GET_PRODUCTS } from "@/graphql/queries";
 import axios from "axios";
 import { graphQLClient } from "@/lib/graphqlClient";
 
-// const client = new GraphQLClient("https://magento.demo.ceymox.net/graphql");
-
 const SingleProduct = ({ params }) => {
-  // console.log(data, "this is my dataaaaaaa");
-
   console.log("slugggDAtaa  :===", params.productId);
-
-  // const {data,isLoading,isError} = useQuery({
-  //   queryKey:["singlepro"],
-  //   queryFn:async()=>{
-  //     const res = await axios("https://magento.demo.ceymox.net/graphql",{
-  //       categoryUid: "Mw==",
-  //       pageSize: 12,
-  //       currentPage: 1,
-  //     })
-  //     // return res.data
-  //   }
-  // })
-  // console.log(data,"ddddddddddddddd");
 
   return (
     <div className="">
@@ -43,10 +23,11 @@ const SingleProduct = ({ params }) => {
           <div className=" text-3xl">Push It Messenger Bag</div>
           <div className=" ">star</div>
           <div className=" ">
-          The name says so, but the Push It Messenger Bag is much more than a
-            busy commuter&#39;s tote. It&#39;s a closet away from home when you&#39;re
-            pedaling from class or work to gym and back or home again. It&#39;s the
-            perfect size and shape for laptop, folded clothes, even extra shoes.
+            The name says so, but the Push It Messenger Bag is much more than a
+            busy commuter&#39;s tote. It&#39;s a closet away from home when
+            you&#39;re pedaling from class or work to gym and back or home
+            again. It&#39;s the perfect size and shape for laptop, folded
+            clothes, even extra shoes.
           </div>
           <div className="  flex justify-end md:justify-start">inStock</div>
           <div className="  flex justify-around p-3">
