@@ -43,9 +43,9 @@ const SingleProduct = ({ params }) => {
           <div className=" text-3xl">Push It Messenger Bag</div>
           <div className=" ">star</div>
           <div className=" ">
-            The name says so, but the Push It Messenger Bag is much more than a
-            busy commuter's tote. It's a closet away from home when you're
-            pedaling from class or work to gym and back or home again. It's the
+          The name says so, but the Push It Messenger Bag is much more than a
+            busy commuter&#39;s tote. It&#39;s a closet away from home when you&#39;re
+            pedaling from class or work to gym and back or home again. It&#39;s the
             perfect size and shape for laptop, folded clothes, even extra shoes.
           </div>
           <div className="  flex justify-end md:justify-start">inStock</div>
