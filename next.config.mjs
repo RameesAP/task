@@ -6,8 +6,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
-        destination: 'https://magento.demo.ceymox.net/:path*', // Proxy to Magento API
+        source: '/api/graphql',
+        destination: 'https://magento.demo.ceymox.net/graphql', // Proxy to Magento API
       },
     ];
   },

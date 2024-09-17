@@ -12,11 +12,44 @@ import { FiShoppingCart } from "react-icons/fi";
 import { MdFavorite } from "react-icons/md";
 import { MdBalance } from "react-icons/md";
 import Link from "next/link";
+import { GET_PRODUCTS } from "@/graphql/queries";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function ProductListing({ products }) {
+
+
+  // const [products, setProducts] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await axios.post("https://magento.demo.ceymox.net/graphql", {
+  //         query: GET_PRODUCTS,
+  //         variables: {
+  //           categoryUid: "Mw==", // Replace with your actual category UID
+  //           pageSize: 12,
+  //           currentPage: 1,
+  //         },
+  //       });
+
+  //       setProducts(response.data.data.products.items);
+  //     } catch (err) {
+  //       setError(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchProducts();
+  // }, []);
+
+
   console.log("dataaaaProducts  ===",products);
-  console.log("dataaaaProductsname  ===",products[0]?.name);
-  console.log("dataaaaProductsid  ===",products[0]?.id);
+  // console.log("dataaaaProductsname  ===",products[0]?.name);
+  // console.log("dataaaaProductsid  ===",products[0]?.id);
   
   return (
     <div className="grid gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">

@@ -27,19 +27,94 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Image from "next/image";
 import ProductListing from "@/components/ProductListing/ProductListing";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+// async function fetchProducts() {
+//   const client = new GraphQLClient("https://magento.demo.ceymox.net/graphql");
+//   const data = await client.request(GET_PRODUCTS, {
+//     categoryUid: "Mw==",
+//     pageSize: 12,
+//     currentPage: 1,
+//   });
+//   return data.products.items;
+// }
 
 async function fetchProducts() {
-  const client = new GraphQLClient("https://magento.demo.ceymox.net/graphql");
-  const data = await client.request(GET_PRODUCTS, {
-    categoryUid: "Mw==",
-    pageSize: 12,
-    currentPage: 1,
+  const response = await fetch("/api/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: GET_PRODUCTS,
+      variables: {
+        categoryUid: "Mw==",
+        pageSize: 12,
+        currentPage: 1,
+      },
+    }),
   });
-  return data.products.items;
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  const data = await response.json();
+  return data.data.products.items;
 }
 
-export default async function Home() {
-  const products = await fetchProducts();
+export default function Home() {
+  // const products = await fetchProducts();
+
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const productData = await fetchProducts();
+        setProducts(productData);
+      } catch (err) {
+        console.error("Error fetching products:", err); // Log the error for more details
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getProducts();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await axios.post("https://magento.demo.ceymox.net/graphql", {
+  //         query: GET_PRODUCTS,
+  //         variables: {
+  //           categoryUid: "Mw==", // Replace with your actual category UID
+  //           pageSize: 12,
+  //           currentPage: 1,
+  //         },
+  //       });
+
+  //       setProducts(response.data.data.products.items);
+  //     } catch (err) {
+  //       setError(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchProducts();
+  // }, []);
+
+  console.log(products, "dddddddddd");
+
   return (
     <div>
       <div className="flex min-h-screen w-full flex-col">
@@ -196,7 +271,6 @@ export default async function Home() {
                       </div>
                     </CardDescription>
                   </CardHeader>
-                
                 </Card>
               </div>
               <div className=" ">
@@ -204,9 +278,7 @@ export default async function Home() {
               </div>
               <div className="">
                 <Card x-chunk="dashboard-04-chunk-1" className="">
-                  <CardHeader>
-                    
-                  </CardHeader>
+                  <CardHeader></CardHeader>
                   <CardContent>
                     <form>
                       <Input placeholder="Search here" />
@@ -291,7 +363,7 @@ export default async function Home() {
                     </div>
                   </CardContent>
                   <CardFooter className="border-t px-6 py-4">
-                  <Button className="lg:w-[150px] md:w-[100px] bg-[#1D4ED8] hover:bg-[#2960f5]">
+                    <Button className="lg:w-[150px] md:w-[100px] bg-[#1D4ED8] hover:bg-[#2960f5]">
                       Read more
                     </Button>
                   </CardFooter>
