@@ -1,35 +1,68 @@
-'use client'; // This ensures the file runs in the client environment
+import Image from "next/image";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { FiShoppingCart } from "react-icons/fi";
+import { MdFavorite } from "react-icons/md";
+import { MdBalance } from "react-icons/md";
+import Link from "next/link";
 
-import { useQuery } from '@apollo/client';
-import { GET_PRODUCTS } from '@/graphql/queries';
-
-const ProductListing = () => {
-  const { loading, error, data } = useQuery(GET_PRODUCTS, {
-    variables: {
-      categoryUid: 'Mw==', // Example category UID
-      pageSize: 12,
-      currentPage: 1,
-    },
-  });
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
+export default function ProductListing({ products }) {
+  console.log("dataaaaProducts  ===",products);
+  console.log("dataaaaProductsname  ===",products[0]?.name);
+  console.log("dataaaaProductsid  ===",products[0]?.id);
+  
   return (
-    <div>
-      {data?.products?.items.map((product) => (
-        <div key={product.id}>
-          <h2>{product.name}</h2>
-          <p>
-            Price: {product.price_range.minimum_price.final_price.value} {product.price_range.minimum_price.final_price.currency}
-          </p>
-          {product.media_gallery.length > 0 && (
-            <img src={product.media_gallery[0].url} alt={product.name} />
-          )}
-        </div>
+    <div className="grid gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+      {products.map((product) => (
+        <Link key={product.id} href={`/product/${product.id}`}>
+          <Card key={product.id} x-chunk="dashboard-04-chunk-1" className="">
+            <CardHeader className="p-6 pb-0">
+              <CardTitle>
+                <div>
+                  <Image
+                    //   className="w-full h-full"
+                    src={
+                      product.media_gallery.length > 0
+                        ? product.media_gallery[0].url
+                        : "/default-image.jpg"
+                    } // Fallback to default if no image
+                    width={260}
+                    height={200}
+                    alt={product.name}
+                  />
+                </div>
+              </CardTitle>
+              <CardDescription className="py-2">{product.name}</CardDescription>
+            </CardHeader>
+            <CardContent className="pb-2">
+              <h3>
+                {product.price_range.minimum_price.final_price.currency}{" "}
+                {product.price_range.minimum_price.final_price.value}
+              </h3>
+            </CardContent>
+            <CardFooter className="border-t px-6 py-4 justify-between">
+              <Button className="lg:w-[150px] md:w-[100px] bg-[#1D4ED8] hover:bg-[#2960f5]">
+                <FiShoppingCart className="mr-2" />
+                Add to cart
+              </Button>
+
+              <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center">
+                <MdFavorite className="text-slate-600" size={22} />
+              </div>
+              <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center">
+                <MdBalance className="text-slate-600" size={22} />
+              </div>
+            </CardFooter>
+          </Card>
+        </Link>
       ))}
     </div>
   );
-};
-
-export default ProductListing;
+}
