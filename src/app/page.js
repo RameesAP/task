@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { GET_PRODUCTS } from "@/graphql/queries";
 import { GraphQLClient } from "graphql-request";
