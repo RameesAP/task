@@ -1,11 +1,11 @@
-"use client";
+// "use client";
 
 import { Button } from "@/components/ui/button";
 import { useSingleProduct } from "@/hooks/queryHooks";
 
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { MdBalance, MdFavorite } from "react-icons/md";
 import { GraphQLClient } from "graphql-request";
@@ -16,7 +16,6 @@ import { graphQLClient } from "@/lib/graphqlClient";
 // const client = new GraphQLClient("https://magento.demo.ceymox.net/graphql");
 
 const SingleProduct = ({ params }) => {
-
   // console.log(data, "this is my dataaaaaaa");
 
   console.log("slugggDAtaa  :===", params.productId);

@@ -1,5 +1,3 @@
-// "use client";
-
 import { GET_PRODUCTS } from "@/graphql/queries";
 import { GraphQLClient } from "graphql-request";
 
@@ -27,7 +25,7 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Image from "next/image";
 import ProductListing from "@/components/ProductListing/ProductListing";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import axios from "axios";
 
 // async function fetchProducts() {
@@ -40,55 +38,55 @@ import axios from "axios";
 //   return data.products.items;
 // }
 
-async function fetchProducts() {
-  const response = await fetch("/api/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: GET_PRODUCTS,
-      variables: {
-        categoryUid: "Mw==",
-        pageSize: 12,
-        currentPage: 1,
-      },
-    }),
-  });
+// async function fetchProducts() {
+//   const response = await fetch("/api/graphql", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       query: GET_PRODUCTS,
+//       variables: {
+//         categoryUid: "Mw==",
+//         pageSize: 12,
+//         currentPage: 1,
+//       },
+//     }),
+//   });
 
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
+//   if (!response.ok) {
+//     throw new Error("Network response was not ok");
+//   }
 
-  const data = await response.json();
-  return data.data.products.items;
-}
+//   const data = await response.json();
+//   return data.data.products.items;
+// }
 
 export default function Home() {
   // const products = await fetchProducts();
 
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // const [products, setProducts] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const productData = await fetchProducts();
-        setProducts(productData);
-      } catch (err) {
-        console.error("Error fetching products:", err); // Log the error for more details
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const getProducts = async () => {
+  //     try {
+  //       const productData = await fetchProducts();
+  //       setProducts(productData);
+  //     } catch (err) {
+  //       console.error("Error fetching products:", err);
+  //       setError(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    getProducts();
-  }, []);
+  //   getProducts();
+  // }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <div>Error: {error}</div>;
 
   // useEffect(() => {
   //   const fetchProducts = async () => {
@@ -113,7 +111,7 @@ export default function Home() {
   //   fetchProducts();
   // }, []);
 
-  console.log(products, "dddddddddd");
+  // console.log(products, "dddddddddd");
 
   return (
     <div>
@@ -242,40 +240,48 @@ export default function Home() {
               x-chunk="dashboard-04-chunk-0"
             >
               <div className="">
-                <Card x-chunk="dashboard-04-chunk-1" className="">
+                <Card x-chunk="dashboard-04-chunk-1">
                   <CardHeader>
                     <CardTitle>Price</CardTitle>
-                    <CardDescription>
-                      <div className="relative mb-6">
-                        <label htmlFor="labels-range-input" className="sr-only">
-                          Labels range
-                        </label>
-                        <input
-                          id="labels-range-input"
-                          type="range"
-                          value="1000"
-                          min="100"
-                          max="1500"
-                          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-                        />
-                        <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6">
-                          Min ($100)
-                        </span>
-
-                        <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-2/3 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
-                          $1000
-                        </span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6">
-                          Max ($1500)
-                        </span>
-                      </div>
-                    </CardDescription>
+                    {/* <CardDescription>
+                    Used to identify your store in the marketplace.
+                  </CardDescription> */}
                   </CardHeader>
+                  <CardContent>
+                    <div className="relative mb-6">
+                      <label htmlFor="labels-range-input" className="sr-only">
+                        Labels range
+                      </label>
+                      <input
+                        id="labels-range-input"
+                        type="range"
+                        value="1000"
+                        min="100"
+                        max="1500"
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                      />
+                      <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6">
+                        Min ($100)
+                      </span>
+
+                      <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-2/3 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
+                        $1000
+                      </span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6">
+                        Max ($1500)
+                      </span>
+                    </div>
+                  </CardContent>
+                  <CardFooter className="border-t px-6 py-4">
+                    <Button>Save</Button>
+                  </CardFooter>
                 </Card>
+              
               </div>
               <div className=" ">
                 <h1 className="text-2xl font-bold text-black">Color</h1>
               </div>
+
               <div className="">
                 <Card x-chunk="dashboard-04-chunk-1" className="">
                   <CardHeader></CardHeader>
@@ -371,7 +377,9 @@ export default function Home() {
               </div>
             </div>
 
-            <ProductListing products={products} />
+            <ProductListing
+            // products={products}
+            />
           </div>
         </main>
       </div>

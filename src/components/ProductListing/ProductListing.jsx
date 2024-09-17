@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import {
   Card,
@@ -16,41 +18,59 @@ import { GET_PRODUCTS } from "@/graphql/queries";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function ProductListing({ products }) {
+async function fetchProducts() {
+  const response = await fetch("/api/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: GET_PRODUCTS,
+      variables: {
+        categoryUid: "Mw==",
+        pageSize: 12,
+        currentPage: 1,
+      },
+    }),
+  });
 
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
 
-  // const [products, setProducts] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
+  const data = await response.json();
+  return data.data.products.items;
+}
 
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const response = await axios.post("https://magento.demo.ceymox.net/graphql", {
-  //         query: GET_PRODUCTS,
-  //         variables: {
-  //           categoryUid: "Mw==", // Replace with your actual category UID
-  //           pageSize: 12,
-  //           currentPage: 1,
-  //         },
-  //       });
+export default function ProductListing() {
+  // { products }
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  //       setProducts(response.data.data.products.items);
-  //     } catch (err) {
-  //       setError(err.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const productData = await fetchProducts();
+        setProducts(productData);
+      } catch (err) {
+        console.error("Error fetching products:", err); // Log the error for more details
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //   fetchProducts();
-  // }, []);
+    getProducts();
+  }, []);
 
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
-  console.log("dataaaaProducts  ===",products);
+  console.log("dataaaaProducts  ===", products);
   // console.log("dataaaaProductsname  ===",products[0]?.name);
   // console.log("dataaaaProductsid  ===",products[0]?.id);
-  
+
   return (
     <div className="grid gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
       {products.map((product) => (
